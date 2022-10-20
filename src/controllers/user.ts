@@ -3,6 +3,8 @@ import { Request, Response } from 'express'
 
 // Models
 import Users from '../models/User'
+import Tasks from '../models/Task'
+import Groups from '../models/Group'
 
 // Utils
 import bcrypt from 'bcrypt'
@@ -55,7 +57,14 @@ class userController {
   }
   async getTasks(req: Request, res: Response) {
     const user = await Users.findOne({ token: res.locals.token }).exec()
-    console.log(user)
+    const tasks = []
+    for (const groupID of user?.groups || []) {
+      const group = await Groups.findById(groupID)
+      const groupTasks = []
+      for (const taskID of group?.tasks || []) groupTasks.push(await Tasks.findById(taskID))
+      tasks.push({ _id: group?._id, title: group?.title, tasks: groupTasks })
+    }
+    res.status(200).send(tasks)
   }
 }
 
