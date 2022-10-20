@@ -1,4 +1,6 @@
-import 'dotenv/config'
+import path from 'path'
+
+require('dotenv').config({ path: path.join(__dirname, '..', '/.env') })
 
 import express, { Application } from 'express'
 import cors from 'cors'
