@@ -1,7 +1,7 @@
 import express, { Router, Request, Response } from 'express'
 
 import authMiddleware from '../middlewares/auth'
-import getTokenMiddleware from '../middlewares/getToken'
+import getUserMiddleware from '../middlewares/getUser'
 import userController from '../controllers/user'
 
 const router: Router = express.Router()
@@ -28,7 +28,7 @@ router.post('/sign-in', userController.signIn)
 // * Token Refresh
 
 // Middlewares
-router.use('/token/refresh', getTokenMiddleware)
+router.use('/token/refresh', getUserMiddleware)
 
 // Route
 router.put('/token/refresh', userController.tokenRefresh)
@@ -36,7 +36,7 @@ router.put('/token/refresh', userController.tokenRefresh)
 // * Tasks
 
 // Middlewares
-router.use('/tasks', getTokenMiddleware)
+router.use('/tasks', getUserMiddleware)
 
 // Route
 router.get('/tasks', userController.getTasks)
