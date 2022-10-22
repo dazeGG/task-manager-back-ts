@@ -33,12 +33,4 @@ router.use('/token/refresh', getUserMiddleware)
 // Route
 router.put('/token/refresh', userController.tokenRefresh)
 
-// * Tasks
-
-// Middlewares
-router.use('/tasks', getUserMiddleware)
-
-// Route
-router.get('/tasks', userController.getTasks)
-
 export default router
