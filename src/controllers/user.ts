@@ -3,6 +3,8 @@ import { Request, Response } from 'express'
 
 // Models
 import Users from '../models/User'
+import Tasks from '../models/Task'
+import Groups from '../models/Group'
 
 // Utils
 import bcrypt from 'bcrypt'
@@ -48,6 +50,14 @@ class userController {
     user.token = token
     await user.save()
     res.status(200).json({ token })
+  }
+  async getGroups(req: Request, res: Response) {
+    const groups = []
+    for (const groupID of res.locals.user.groups || []) {
+      const group = await Groups.findById(groupID)
+      groups.push({ _id: group?._id, title: group?.title })
+    }
+    res.status(200).send(groups)
   }
 }
 
