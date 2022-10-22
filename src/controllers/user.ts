@@ -45,26 +45,19 @@ class userController {
     }
   }
   async tokenRefresh(req: Request, res: Response) {
-    const user = await Users.findOne({ token: res.locals.token }).exec()
-    if (user) {
-      const token = await generateUniqueToken()
-      user.token = token
-      await user.save()
-      res.status(200).json({ token })
-    } else {
-      res.status(404).send('User with this token not found')
-    }
+    const user = res.locals.user
+    const token = await generateUniqueToken()
+    user.token = token
+    await user.save()
+    res.status(200).json({ token })
   }
-  async getTasks(req: Request, res: Response) {
-    const user = await Users.findOne({ token: res.locals.token }).exec()
-    const tasks = []
-    for (const groupID of user?.groups || []) {
+  async getGroups(req: Request, res: Response) {
+    const groups = []
+    for (const groupID of res.locals.user.groups || []) {
       const group = await Groups.findById(groupID)
-      const groupTasks = []
-      for (const taskID of group?.tasks || []) groupTasks.push(await Tasks.findById(taskID))
-      tasks.push({ _id: group?._id, title: group?.title, tasks: groupTasks })
+      groups.push({ _id: group?._id, title: group?.title })
     }
-    res.status(200).send(tasks)
+    res.status(200).send(groups)
   }
 }
 
