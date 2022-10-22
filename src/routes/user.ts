@@ -27,10 +27,18 @@ router.post('/sign-in', userController.signIn)
 
 // * Token Refresh
 
-// Middlewares
+// Middleware
 router.use('/token/refresh', getUserMiddleware)
 
 // Route
 router.put('/token/refresh', userController.tokenRefresh)
+
+// * Get Groups
+
+// Middleware
+router.use('/groups', getUserMiddleware)
+
+// Route
+router.get('/groups', userController.getGroups)
 
 export default router
