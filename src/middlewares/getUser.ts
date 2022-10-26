@@ -7,6 +7,6 @@ export default async (req: Request, res: Response, next: NextFunction) => {
         res.locals.user = user
         next()
     } else {
-        res.status(404).send('User with this token not found')
+        res.status(401).send('User with this token not found')
     }
 }

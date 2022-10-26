@@ -5,6 +5,10 @@ import groupController from '../controllers/group'
 
 const router: Router = express.Router()
 
-router.use('/group', getUserMiddleware)
+router.use('/', getUserMiddleware)
+
+router.get('/:id', groupController.getGroup)
+router.post('/create', groupController.createGroup)
+router.put('/update', groupController.updateGroup)
 
 export default router

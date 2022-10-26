@@ -10,7 +10,7 @@ const groupSchema = new mongoose.Schema<IGroup>({
   tasks: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Task'
+      ref: 'task'
     }
   ],
 })

@@ -3,7 +3,6 @@ import { Request, Response } from 'express'
 
 // Models
 import Users from '../models/User'
-import Tasks from '../models/Task'
 import Groups from '../models/Group'
 
 // Utils

@@ -6,12 +6,16 @@ require('dotenv').config({ path: path.join(__dirname, '..', '/.env') })
 import express, { Application } from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
+import swaggerUI from 'swagger-ui-express'
 
 import router from './routes'
+import swaggerOptions from './swagger/swagger'
 
 mongoose.connect(process.env.dbURI || '')
 
 const app: Application = express()
+
+app.use('/swagger', swaggerUI.serve, swaggerUI.setup(swaggerOptions))
 
 app.use(express.json())
 app.use(cors())
