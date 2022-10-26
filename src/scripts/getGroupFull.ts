@@ -1,7 +1,7 @@
-import mongoose from "mongoose"
+import mongoose from 'mongoose'
 
-import Groups from "../models/Group"
-import Tasks from "../models/Task"
+import Groups from '../models/Group'
+import Tasks from '../models/Task'
 
 export default async (groupID: mongoose.Types.ObjectId | string) => {
     const group = await Groups.findById(groupID)
