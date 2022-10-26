@@ -3,7 +3,7 @@ import Users from '../models/User'
 
 export default async (req: Request, res: Response, next: NextFunction) => {
     const authorizationItems = (req.headers.authorization || '').split(' ')
-    if (authorizationItems[0] === 'Brearer') {
+    if (authorizationItems[0] === 'Bearer') {
         const token = authorizationItems[1]
         const user = await Users.findOne({ token })
         if (user) {
