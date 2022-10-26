@@ -9,5 +9,6 @@ router.use('/', getUserMiddleware)
 
 router.get('/:id', groupController.getGroup)
 router.post('/create', groupController.createGroup)
+router.put('/update', groupController.updateGroup)
 
 export default router
