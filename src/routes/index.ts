@@ -19,6 +19,8 @@ router.use('/user', userRouter)
 router.use('/group', getUserMiddleware)
 
 router.get('/group/:id', groupController.get)
+router.put('/group/move', groupController.move)
+router.delete('/group', groupController.delete)
 router.post('/group', groupController.create)
 router.put('/group', groupController.update)
 router.delete('/group', groupController.delete)

@@ -41,6 +41,47 @@ class groupController {
         if (group) res.sendStatus(204)
         else res.status(404).send('Invalid group id')
     }
+    async move(req: Request, res: Response) {
+        const user: HydratedDocument<IUser> = res.locals.user
+        for (let i = 0; i < user.groups.length; i++) {
+            if (user.groups[i].equals(req.body._id)) {
+                switch (req.body.move) {
+                    case 'up':
+                        if (i !== 0) {
+                            [user.groups[i], user.groups[i - 1]] = [user.groups[i - 1], user.groups[i]]
+                            await user.save()
+                            res.status(200).send('Successfully moved')
+                        } else res.status(400).send('You are trying to move up the first group!')
+                        break
+                    case 'down':
+                        if (i !== user.groups.length - 1) {
+                            [user.groups[i], user.groups[i + 1]] = [user.groups[i + 1], user.groups[i]]
+                            await user.save()
+                            res.status(200).send('Successfully moved')
+                        } else res.status(400).send('You are trying to move down the last group!')
+                        break
+                    case 'top':
+                        if (i !== 0) {
+                            [user.groups[i], user.groups[0]] = [user.groups[0], user.groups[i]]
+                            await user.save()
+                            res.status(200).send('Successfully moved')
+                        } else res.status(400).send('You are trying to move top the first group!')
+                        break
+                    case 'bottom':
+                        if (i !== user.groups.length - 1) {
+                            [user.groups[i], user.groups[user.groups.length - 1]] = [user.groups[user.groups.length - 1], user.groups[i]]
+                            await user.save()
+                            res.status(200).send('Successfully moved')
+                        } else res.status(400).send('You are trying to move bottom the last group!')
+                        break
+                    default:
+                        res.status(400).send('Make sure your move parameter is one of ["up", "down", "top", "bottom"]')
+                        return
+                }
+                break
+            }
+        }
+    }
 }
 
 export default new groupController()
