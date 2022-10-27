@@ -37,8 +37,18 @@ class groupController {
         }
     }
     async delete(req: Request, res: Response) {
-        const group: HydratedDocument<IGroup> | null = await Groups.findByIdAndDelete(req.body._id)
-        if (group) res.sendStatus(204)
+        const group: HydratedDocument<IGroup> | null = await Groups.findByIdAndDelete(req.params.id)
+        const user: HydratedDocument<IUser> = res.locals.user
+        if (group) {
+            for (let i = 0; i < user.groups.length; i++) {
+                if (group._id.equals(user.groups[i])) {
+                    user.groups.splice(i, 1)
+                    await user.save()
+                    break
+                }
+            }
+            res.sendStatus(204)
+        }
         else res.status(404).send('Invalid group id')
     }
     async move(req: Request, res: Response) {
