@@ -18,15 +18,10 @@ export default {
             groups: {
                 type: 'array',
                 additionalProperties: {
-                    $ref: "#/definitions/Group"
+                    $ref: '#/definitions/Group'
                 }
             }
-        },
-        example: {
-            id: '635171cd473e21bb4c868446',
-            username: 'vova',
-            password: 'VovaPasss'
-        },
+        }
     },
     Group: {
         type: 'object',
@@ -39,14 +34,9 @@ export default {
             tasks: {
                 type: 'array',
                 additionalProperties: {
-                    $ref: "#/definitions/Task"
+                    $ref: '#/definitions/Task'
                 }
             }
-        },
-        example: {
-            id: '635171cd473e21bb4c868446',
-            username: 'vova',
-            password: 'VovaPasss'
         }
     },
     Task: {
@@ -64,12 +54,7 @@ export default {
             password: {
                 type: 'string',
                 description: 'An user`s password'
-            },
-        },
-        example: {
-            id: '635171cd473e21bb4c868446',
-            username: 'vova',
-            password: 'VovaPasss'
+            }
         }
     }
 }

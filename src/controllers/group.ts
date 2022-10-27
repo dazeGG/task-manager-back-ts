@@ -3,13 +3,12 @@ import { Request, Response } from 'express'
 
 // Models
 import Groups from '../models/Group'
-import Tasks from '../models/Task'
 
 // Utils
 import getGroupFull from '../scripts/getGroupFull'
 
 class groupController {
-    async getGroup(req: Request, res: Response) {
+    async get(req: Request, res: Response) {
         const groupID = req.params.id
         if (res.locals.user.groups.includes(groupID)) {
             res.status(200).send(await getGroupFull(groupID))
@@ -17,24 +16,14 @@ class groupController {
             res.status(404).send('Group with this id was not found')
         }
     }
-    // async createGroup(req: Request, res: Response) {
-    //     const tasks = []
-    //     if (req.body.tasks)
-    //         for (const task of req.body.tasks) tasks.push((await Tasks.create(task))._id)
-    //     const group = await Groups.create({ title: req.body.title, tasks })
-    //     const user = res.locals.user
-    //     user.groups.push(group._id)
-    //     await user.save()
-    //     res.status(201).send(await getGroupFull(group._id))
-    // }
-    async createGroup(req: Request, res: Response) {
+    async create(req: Request, res: Response) {
         const group = await Groups.create({ title: req.body.title })
         const user = res.locals.user
         user.groups.push(group._id)
         await user.save()
         res.status(201).send(await getGroupFull(group._id))
     }
-    async updateGroup(req: Request, res: Response) {
+    async update(req: Request, res: Response) {
         const group = await Groups.findById(req.body._id)
         if (group) {
             group.title = req.body.title
@@ -43,6 +32,11 @@ class groupController {
         } else {
             res.status(404).send('Group with this id was not found')
         }
+    }
+    async delete(req: Request, res: Response) {
+        const group = await Groups.findByIdAndDelete(req.body._id)
+        if (group) res.sendStatus(204)
+        else res.status(404).send('Invalid group id')
     }
 }
 

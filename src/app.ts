@@ -9,7 +9,7 @@ import mongoose from 'mongoose'
 import swaggerUI from 'swagger-ui-express'
 
 import router from './routes'
-import swaggerOptions from './swagger/swagger'
+import swaggerOptions from './swagger'
 
 mongoose.connect(process.env.dbURI || '')
 
