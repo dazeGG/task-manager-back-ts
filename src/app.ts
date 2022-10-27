@@ -1,7 +1,7 @@
 import path from 'path'
 
 // eslint-disable-next-line
-require('dotenv').config({ path: path.join(__dirname, '..', '/.env') })
+require('dotenv').config({ path: path.join(__dirname, '..', '.env') })
 
 import express, { Application } from 'express'
 import cors from 'cors'

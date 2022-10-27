@@ -1,6 +1,12 @@
+import path from 'path'
+
+import YAML from "yamljs"
+
 import tags from './tags'
 import paths from './paths'
-import definitions from './definitions'
+// import definitions from './definitions'
+
+const definitions = YAML.load(path.join(__dirname, '..', '..', 'swagger', 'definitions.yaml'))
 
 export default {
     swagger: '2.0',
