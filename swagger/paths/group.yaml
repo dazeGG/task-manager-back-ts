@@ -1,10 +1,15 @@
-/group/{id}:
+/group/{_id}:
   get:
     tags:
       - Group
     summary: Endpoint to get user`s group
     security:
       - bearerAuth: []
+    parameters:
+      - in: path
+        name: _id
+        required: true
+        description: The group`s id to get
     responses:
       200:
         description: OK
@@ -16,6 +21,24 @@
         $ref: "#/components/responses/UnauthorizedError"
       404:
         description: Group with this id was not found
+  delete:
+    tags:
+      - Group
+    summary: Endpoint to delete group by id
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: _id
+        required: true
+        description: The group`s id to delete
+    responses:
+      204:
+        description: No Content
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      404:
+        description: Invalid group id
 /group/move:
   put:
     tags:
@@ -88,25 +111,3 @@
         $ref: "#/components/responses/UnauthorizedError"
       404:
         description: Group with this id was not found
-  delete:
-    tags:
-      - Group
-    summary: Endpoint to delete group by id
-    security:
-      - bearerAuth: []
-    parameters:
-      - in: body
-        name: Group
-        required: true
-        description: The group`s id to delete
-        schema:
-          properties:
-            _id:
-              type: string
-    responses:
-      204:
-        description: No Content
-      401:
-        $ref: "#/components/responses/UnauthorizedError"
-      404:
-        description: Invalid group id
