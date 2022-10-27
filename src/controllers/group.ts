@@ -3,7 +3,6 @@ import { Request, Response } from 'express'
 
 // Models
 import Groups from '../models/Group'
-import Tasks from '../models/Task'
 
 // Utils
 import getGroupFull from '../scripts/getGroupFull'
@@ -17,16 +16,6 @@ class groupController {
             res.status(404).send('Group with this id was not found')
         }
     }
-    // async createGroup(req: Request, res: Response) {
-    //     const tasks = []
-    //     if (req.body.tasks)
-    //         for (const task of req.body.tasks) tasks.push((await Tasks.create(task))._id)
-    //     const group = await Groups.create({ title: req.body.title, tasks })
-    //     const user = res.locals.user
-    //     user.groups.push(group._id)
-    //     await user.save()
-    //     res.status(201).send(await getGroupFull(group._id))
-    // }
     async create(req: Request, res: Response) {
         const group = await Groups.create({ title: req.body.title })
         const user = res.locals.user
