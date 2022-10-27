@@ -1,5 +1,8 @@
 // Types
 import { Request, Response } from 'express'
+import mongoose, { HydratedDocument } from 'mongoose'
+import { IUser } from '../models/User'
+import { IGroup } from '../models/Group'
 
 // Models
 import Users from '../models/User'
@@ -16,12 +19,7 @@ class userController {
       const username: string = req.body.username
       const password: string = await bcrypt.hash(req.body.password, 10)
       const token: string = await generateUniqueToken()
-      await Users.create({
-        username,
-        password,
-        token,
-        groups: [await createWelcomeGroup()],
-      })
+      await Users.create({ username, password, token, groups: [await createWelcomeGroup()] })
       res.status(201).json({ token })
     } catch (error) {
       console.log(error)
@@ -29,10 +27,10 @@ class userController {
     }
   }
   async signIn(req: Request, res: Response) {
-    const user = await Users.findOne({ username: req.body.username })
+    const user: HydratedDocument<IUser> | null = await Users.findOne({ username: req.body.username })
     if (user) {
       if (await bcrypt.compare(req.body.password, user.password)) {
-        const token = await generateUniqueToken()
+        const token: string = await generateUniqueToken()
         user.token = token
         await user.save()
         res.status(200).json({ token })
@@ -44,17 +42,17 @@ class userController {
     }
   }
   async tokenRefresh(req: Request, res: Response) {
-    const user = res.locals.user
-    const token = await generateUniqueToken()
+    const user: HydratedDocument<IUser> = res.locals.user
+    const token: string = await generateUniqueToken()
     user.token = token
     await user.save()
     res.status(200).json({ token })
   }
   async getGroups(req: Request, res: Response) {
-    const groups = []
+    const groups: { _id: mongoose.Types.ObjectId, title: string }[] = []
     for (const groupID of res.locals.user.groups || []) {
-      const group = await Groups.findById(groupID)
-      groups.push({ _id: group?._id, title: group?.title })
+      const group: HydratedDocument<IGroup> | null = await Groups.findById(groupID)
+      if (group) groups.push({ _id: group._id, title: group.title })
     }
     res.status(200).send(groups)
   }
