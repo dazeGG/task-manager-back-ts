@@ -1,0 +1,58 @@
+securitySchemes:
+  bearerAuth:
+    type: http
+    scheme: bearer
+schemas:
+  User:
+    type: object
+    properties:
+      _id:
+        type: string
+        description: An automatically generated id of the user
+      username:
+        type: string
+        description: An user`s username
+      password:
+        type: string
+        description: An user`s password
+      groups:
+        type: array
+        items:
+          $ref: "#/components/schemas/Group"
+        description: An array of user`s groups
+    required:
+      - username
+      - password
+  Group:
+    type: object
+    properties:
+      _id:
+        type: string
+        description: An automatically generated id of the group
+      title:
+        type: string
+        description: A title of the group
+      tasks:
+        type: array
+        items:
+          $ref: "#/components/schemas/Task"
+        description: An array of group`s tasks
+    required:
+      - title
+  Task:
+    type: object
+    properties:
+      _id:
+        type: string
+        description: An automatically generated id of the task
+      title:
+        type: string
+        description: A title of the task
+      checked:
+        type: boolean
+        description: Shows the task is marked or not
+      subtasks:
+        type: array
+        description: An array of task`s subtasks
+    required:
+      - title
