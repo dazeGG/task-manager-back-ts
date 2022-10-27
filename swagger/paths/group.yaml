@@ -16,6 +16,31 @@
         $ref: "#/components/responses/UnauthorizedError"
       404:
         description: Group with this id was not found
+/group/move:
+  put:
+    tags:
+      - Group
+    summary: Endpoint to move user`s group
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: body
+        name: Group id and move method
+        required: true
+        description: The group`s id to move and move method
+        schema:
+          properties:
+            _id:
+              type: string
+            move:
+              type: string
+    responses:
+      200:
+        description: Successfully moved
+      400:
+        description: You are trying to move (up|down|top|bottom) the last group!
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
 /group:
   post:
     tags:

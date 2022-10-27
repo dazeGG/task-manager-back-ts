@@ -12,8 +12,14 @@ export default {
         version: 'v1',
         description: 'A Task Manager Express API',
     },
-    host: 'taskmanager.daze.fun:1818',
-    schemes: ['http'],
+    servers: [
+        {
+            url: 'http://taskmanager.daze.fun:1818'
+        },
+        {
+            url: 'https://taskmanager.daze.fun:1818'
+        },
+    ],
     consumes: ['application/json'],
     produces: ['application/json'],
     tags,
