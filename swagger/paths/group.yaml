@@ -12,6 +12,8 @@
           application/json:
             schema:
               $ref: "#/components/schemas/Group"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
       404:
         description: Group with this id was not found
 /group:
@@ -37,6 +39,8 @@
           application/json:
             schema:
               $ref: "#/components/schemas/Group"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
   put:
     tags:
       - Group
@@ -55,6 +59,8 @@
     responses:
       200:
         description: Successfully updated
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
       404:
         description: Group with this id was not found
   delete:
@@ -75,5 +81,7 @@
     responses:
       204:
         description: No Content
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
       404:
         description: Invalid group id

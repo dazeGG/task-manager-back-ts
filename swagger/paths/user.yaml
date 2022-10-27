@@ -66,7 +66,7 @@
       400:
         description: Make sure you have sent the token correctly
       401:
-        description: User with this token not found
+        $ref: "#/components/responses/UnauthorizedError"
 /user/groups:
   get:
     tags:
@@ -83,3 +83,5 @@
               type: array
               items:
                 $ref: "#/components/schemas/Group"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"

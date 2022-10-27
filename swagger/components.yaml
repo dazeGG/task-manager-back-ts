@@ -56,3 +56,6 @@ schemas:
         description: An array of task`s subtasks
     required:
       - title
+responses:
+  UnauthorizedError:
+    description: Access token is missing or invalid

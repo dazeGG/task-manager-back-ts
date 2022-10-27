@@ -1,18 +1,19 @@
 import { Request, Response, NextFunction } from 'express'
-import Users from '../models/User'
+import { HydratedDocument } from 'mongoose';
+import Users, { IUser } from '../models/User'
 
 export default async (req: Request, res: Response, next: NextFunction) => {
-    const authorizationItems = (req.headers.authorization || '').split(' ')
-    if (authorizationItems[0] === 'Bearer') {
-        const token = authorizationItems[1]
-        const user = await Users.findOne({ token })
+    const authorizationHeader: string = req.headers.authorization || ''
+    if (authorizationHeader.startsWith("Bearer ")) {
+        const token: string = authorizationHeader.substring(7, authorizationHeader.length);
+        const user: HydratedDocument<IUser> | null = await Users.findOne({ token })
         if (user) {
             res.locals.user = user
             next()
         } else {
-            res.status(401).send('User with this token not found')
+            res.status(401).send('Access token is invalid')
         }
     } else {
-        res.status(400).send('Make sure you have sent the token correctly')
+        res.status(401).send('Access token is missing')
     }
 }
