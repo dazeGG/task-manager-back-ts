@@ -1,0 +1,63 @@
+/group/{id}:
+  get:
+    tags:
+      - Group
+    summary: Endpoint to get user`s group
+    responses:
+      200:
+        description: OK
+      404:
+        description: Group with this id was not found
+/group:
+  post:
+    tags:
+      - Group
+    summary: Endpoint to create group
+    parameters:
+      - in: body
+        name: Group
+        required: true
+        description: The group`s title to create
+        schema:
+          properties:
+            title:
+              type: string
+    responses:
+      201:
+        description: Created
+  put:
+    tags:
+      - Group
+    summary: Endpoint to update group`s title
+    parameters:
+      - in: body
+        name: Group
+        required: true
+        description: The group`s title to update
+        schema:
+          properties:
+            title:
+              type: string
+    responses:
+      200:
+        description: Successfully updated
+      404:
+        description: Group with this id was not found
+  delete:
+    tags:
+      - Group
+    summary: Endpoint to delete group by id
+    parameters:
+      - in: body
+        name: Group
+        required: true
+        description: The group`s id to delete
+        schema:
+          properties:
+            _id:
+              type: string
+    responses:
+      204:
+        description: No Content
+      404:
+        description: Invalid group id
