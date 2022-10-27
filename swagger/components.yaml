@@ -54,6 +54,18 @@ schemas:
       subtasks:
         type: array
         description: An array of task`s subtasks
+        items:
+          type: object
+          properties:
+            _id:
+              type: string
+              description: An automatically generated id of the subtask
+            title:
+              type: string
+              description: A title of the subtask
+            checked:
+              type: boolean
+              description: Shows the subtask is marked or not
     required:
       - title
 responses:
