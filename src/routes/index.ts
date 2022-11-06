@@ -19,9 +19,9 @@ router.use('/user', userRouter)
 router.use('/group', getUserMiddleware)
 
 router.get('/group/:id', groupController.get)
-router.put('/group/move', groupController.move)
+// router.put('/group/move', groupController.move)
 router.post('/group', groupController.create)
-router.put('/group', groupController.update)
+router.put('/group/:id', groupController.update)
 router.delete('/group/:id', groupController.delete)
 
 export default router

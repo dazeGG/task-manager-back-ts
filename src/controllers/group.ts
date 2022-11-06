@@ -14,7 +14,9 @@ class groupController {
     async get(req: Request, res: Response) {
         const groupID: string = req.params.id
         if (res.locals.user.groups.includes(groupID)) {
-            res.status(200).send(await getGroupFull(groupID))
+            const group = await getGroupFull(groupID)
+            if (group) res.status(200).send(group)
+            else res.status(404).send('Group with this id was not found')
         } else {
             res.status(404).send('Group with this id was not found')
         }
@@ -27,7 +29,7 @@ class groupController {
         res.status(201).send(await getGroupFull(group._id))
     }
     async update(req: Request, res: Response) {
-        const group: HydratedDocument<IGroup> | null = await Groups.findById(req.body._id)
+        const group: HydratedDocument<IGroup> | null = await Groups.findById(req.params.id)
         if (group) {
             group.title = req.body.title
             await group.save()
@@ -50,47 +52,6 @@ class groupController {
             res.sendStatus(204)
         }
         else res.status(404).send('Invalid group id')
-    }
-    async move(req: Request, res: Response) {
-        const user: HydratedDocument<IUser> = res.locals.user
-        for (let i = 0; i < user.groups.length; i++) {
-            if (user.groups[i].equals(req.body._id)) {
-                switch (req.body.move) {
-                    case 'up':
-                        if (i !== 0) {
-                            [user.groups[i], user.groups[i - 1]] = [user.groups[i - 1], user.groups[i]]
-                            await user.save()
-                            res.status(200).send('Successfully moved')
-                        } else res.status(400).send('You are trying to move up the first group!')
-                        break
-                    case 'down':
-                        if (i !== user.groups.length - 1) {
-                            [user.groups[i], user.groups[i + 1]] = [user.groups[i + 1], user.groups[i]]
-                            await user.save()
-                            res.status(200).send('Successfully moved')
-                        } else res.status(400).send('You are trying to move down the last group!')
-                        break
-                    case 'top':
-                        if (i !== 0) {
-                            [user.groups[i], user.groups[0]] = [user.groups[0], user.groups[i]]
-                            await user.save()
-                            res.status(200).send('Successfully moved')
-                        } else res.status(400).send('You are trying to move top the first group!')
-                        break
-                    case 'bottom':
-                        if (i !== user.groups.length - 1) {
-                            [user.groups[i], user.groups[user.groups.length - 1]] = [user.groups[user.groups.length - 1], user.groups[i]]
-                            await user.save()
-                            res.status(200).send('Successfully moved')
-                        } else res.status(400).send('You are trying to move bottom the last group!')
-                        break
-                    default:
-                        res.status(400).send('Make sure your move parameter is one of ["up", "down", "top", "bottom"]')
-                        return
-                }
-                break
-            }
-        }
     }
 }
 
