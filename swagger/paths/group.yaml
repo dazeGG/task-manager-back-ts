@@ -48,7 +48,7 @@
       - bearerAuth: []
     parameters:
       - in: body
-        name: Group id and move method
+        name: data
         required: true
         description: The group`s id to move and move method
         schema:
@@ -73,7 +73,7 @@
       - bearerAuth: []
     parameters:
       - in: body
-        name: Group
+        name: data
         required: true
         description: The group`s title to create
         schema:
@@ -97,7 +97,7 @@
       - bearerAuth: []
     parameters:
       - in: body
-        name: Group
+        name: data
         required: true
         description: The group`s title to update
         schema:

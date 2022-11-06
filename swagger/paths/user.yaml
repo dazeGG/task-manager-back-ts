@@ -5,11 +5,11 @@
     summary: Endpoint to registration user
     parameters:
       - in: body
-        name: User
+        name: data
         required: true
         description: The user`s data to create
         schema:
-          $ref: "#/definitions/User"
+          $ref: "#/components/schemas/User"
     responses:
       201:
         description: Created
@@ -27,11 +27,11 @@
     summary: Endpoint to authorization user
     parameters:
       - in: body
-        name: User
+        name: data
         required: true
         description: The user`s data to create
         schema:
-          $ref: "#/definitions/User"
+          $ref: "#/components/schemas/User"
     responses:
       200:
         description: OK
