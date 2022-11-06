@@ -1,6 +1,7 @@
-/user/sign-up:
+/user/auth/sign-up:
   post:
     tags:
+      - Auth
       - User
     summary: Endpoint to registration user
     parameters:
@@ -24,9 +25,10 @@
               properties:
                 token:
                   type: string
-/user/sign-in:
+/user/auth/sign-in:
   post:
     tags:
+      - Auth
       - User
     summary: Endpoint to authorization user
     parameters:
@@ -54,9 +56,10 @@
         description: Invalid password
       404:
         description: User with this username does not exist
-/user/token/refresh:
+/user/auth/token/refresh:
   put:
     tags:
+      - Auth
       - User
     summary: Endpoint to refresh user`s token
     security:

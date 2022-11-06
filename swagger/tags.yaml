@@ -1,3 +1,5 @@
+- name: Auth
+  description: API to work with authorization
 - name: User
   description: API to work with users
 - name: Group
