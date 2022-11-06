@@ -1,69 +1,3 @@
-/group/{_id}:
-  get:
-    tags:
-      - Group
-    summary: Endpoint to get user`s group
-    security:
-      - bearerAuth: []
-    parameters:
-      - in: path
-        name: _id
-        required: true
-        description: The group`s id to get
-    responses:
-      200:
-        description: OK
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Group"
-      401:
-        $ref: "#/components/responses/UnauthorizedError"
-      404:
-        description: Group with this id was not found
-  delete:
-    tags:
-      - Group
-    summary: Endpoint to delete group by id
-    security:
-      - bearerAuth: []
-    parameters:
-      - in: path
-        name: _id
-        required: true
-        description: The group`s id to delete
-    responses:
-      204:
-        description: No Content
-      401:
-        $ref: "#/components/responses/UnauthorizedError"
-      404:
-        description: Invalid group id
-/group/move:
-  put:
-    tags:
-      - Group
-    summary: Endpoint to move user`s group
-    security:
-      - bearerAuth: []
-    parameters:
-      - in: body
-        name: data
-        required: true
-        description: The group`s id to move and move method
-        schema:
-          properties:
-            _id:
-              type: string
-            move:
-              type: string
-    responses:
-      200:
-        description: Successfully moved
-      400:
-        description: You are trying to move (up|down|top|bottom) the last group!
-      401:
-        $ref: "#/components/responses/UnauthorizedError"
 /group:
   post:
     tags:
@@ -89,6 +23,29 @@
               $ref: "#/components/schemas/Group"
       401:
         $ref: "#/components/responses/UnauthorizedError"
+/group/{_id}:
+  get:
+    tags:
+      - Group
+    summary: Endpoint to get user`s group
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: _id
+        required: true
+        description: The group`s id to get
+    responses:
+      200:
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Group"
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      404:
+        description: Group with this id was not found
   put:
     tags:
       - Group
@@ -96,6 +53,10 @@
     security:
       - bearerAuth: []
     parameters:
+      - in: path
+        name: _id
+        required: true
+        description: The group`s id to update
       - in: body
         name: data
         required: true
@@ -107,6 +68,24 @@
     responses:
       200:
         description: Successfully updated
+      401:
+        $ref: "#/components/responses/UnauthorizedError"
+      404:
+        description: Group with this id was not found
+  delete:
+    tags:
+      - Group
+    summary: Endpoint to delete group by id
+    security:
+      - bearerAuth: []
+    parameters:
+      - in: path
+        name: _id
+        required: true
+        description: The group`s id to delete
+    responses:
+      204:
+        description: No Content
       401:
         $ref: "#/components/responses/UnauthorizedError"
       404:

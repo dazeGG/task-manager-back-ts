@@ -9,7 +9,11 @@
         required: true
         description: The user`s data to create
         schema:
-          $ref: "#/components/schemas/User"
+          properties:
+            username:
+              type: string
+            password:
+              type: string
     responses:
       201:
         description: Created
@@ -31,7 +35,11 @@
         required: true
         description: The user`s data to create
         schema:
-          $ref: "#/components/schemas/User"
+          properties:
+            username:
+              type: string
+            password:
+              type: string
     responses:
       200:
         description: OK
