@@ -3,12 +3,7 @@ import express, { Router } from 'express'
 
 // Routers
 import userRouter from './user'
-
-// Middlewares
-import getUserMiddleware from '../middlewares/getUser'
-
-// Controllers
-import groupController from '../controllers/group'
+import groupRouter from './group'
 
 const router: Router = express.Router()
 
@@ -16,12 +11,6 @@ const router: Router = express.Router()
 router.use('/user', userRouter)
 
 // Group
-router.use('/group', getUserMiddleware)
-
-router.get('/group/:id', groupController.get)
-// router.put('/group/move', groupController.move)
-router.post('/group', groupController.create)
-router.put('/group/:id', groupController.update)
-router.delete('/group/:id', groupController.delete)
+router.use('/group', groupRouter)
 
 export default router
