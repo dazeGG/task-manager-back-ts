@@ -21,5 +21,7 @@ router.use('/:id', taskMiddleware.getTask)
 router.use('/:id', groupMiddleware.taskExists)
 
 router.get('/:id', taskController.get)
+router.put('/:id', taskController.update)
+router.delete('/:id', taskController.delete)
 
 export default router
