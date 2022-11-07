@@ -15,13 +15,10 @@ export default {
   usernameCheck: async (req: Request, res: Response, next: NextFunction) => {
     const errors: string[] = []
     if (await Users.findOne({ username: req.body.username }).exec())
-      errors.push('username: this username is already taken')
+      errors.push('this username is already taken')
     for (const character of req.body.username) {
       if (!usernameAvailabeCharacters.includes(character)) {
-        errors.push(
-          'username: the username must consist only of ' +
-            'lowercase latin letters, numbers and a sign "-"'
-        )
+        errors.push('the username must consist only of lowercase latin letters, numbers and a sign "-"')
         break
       }
     }
@@ -31,7 +28,7 @@ export default {
   passwordCheck: (req: Request, res: Response, next: NextFunction) => {
     const errors: string[] = []
     if (req.body.password.length < 8)
-      errors.push('password: must be at least 8 characters long')
+      errors.push('password must be at least 8 characters long')
     if (errors.length) res.status(400).send(errors)
     else next()
   }

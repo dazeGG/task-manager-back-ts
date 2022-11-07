@@ -16,6 +16,6 @@ export default {
     },
     groupExists: async (req: Request, res: Response, next: NextFunction) => {
         if (res.locals.user.groups.includes(res.locals.group._id)) next()
-        else res.status(404).send('Group with this id was not found')
+        else res.status(289).send('Group with this id was not found')
     }
 }
