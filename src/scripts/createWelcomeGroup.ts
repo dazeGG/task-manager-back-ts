@@ -11,10 +11,7 @@ import Tasks from '../models/Task'
 import welcomeTask from '../utils/welcomeTask'
 
 export default async (): Promise<Types.ObjectId> => {
-  const createdTask: HydratedDocument<ITask> = await Tasks.create(welcomeTask)
-  const createdGroup: HydratedDocument<IGroup> = await Groups.create({
-    title: 'Welcome Group',
-    tasks: [createdTask._id],
-  })
-  return createdGroup._id
+  const task: HydratedDocument<ITask> = await Tasks.create(welcomeTask)
+  const group: HydratedDocument<IGroup> = await Groups.create({ title: 'Welcome Group', tasks: [task._id] })
+  return group._id
 }
