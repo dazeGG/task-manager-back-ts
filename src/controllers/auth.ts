@@ -11,8 +11,8 @@ import bcrypt from 'bcrypt'
 import generateUniqueToken from '../scripts/generateUniqueToken'
 import createWelcomeGroup from '../scripts/createWelcomeGroup'
 
-class authController {
-  async signUp(req: Request, res: Response) {
+export default {
+  signUp: async (req: Request, res: Response) => {
     try {
       const username: string = req.body.username
       const password: string = await bcrypt.hash(req.body.password, 10)
@@ -23,8 +23,8 @@ class authController {
       console.log(error)
       res.status(500).send(error)
     }
-  }
-  async signIn(req: Request, res: Response) {
+  },
+  signIn: async (req: Request, res: Response) => {
     const user: HydratedDocument<IUser> | null = await Users.findOne({ username: req.body.username })
     if (user) {
       if (await bcrypt.compare(req.body.password, user.password)) {
@@ -38,8 +38,8 @@ class authController {
     } else {
       res.status(404).send('User with this username does not exist')
     }
-  }
-  async tokenRefresh(req: Request, res: Response) {
+  },
+  tokenRefresh: async (req: Request, res: Response) => {
     const user: HydratedDocument<IUser> = res.locals.user
     const token: string = await generateUniqueToken()
     user.token = token
@@ -47,5 +47,3 @@ class authController {
     res.status(200).json({ token })
   }
 }
-
-export default new authController()

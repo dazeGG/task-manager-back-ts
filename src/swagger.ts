@@ -1,6 +1,6 @@
 import path from 'path'
 
-import YAML from "yamljs"
+import YAML from 'yamljs'
 
 const tags = YAML.load(path.join(__dirname, '..', 'swagger', 'tags.yaml'))
 const components = YAML.load(path.join(__dirname, '..', 'swagger', 'components.yaml'))

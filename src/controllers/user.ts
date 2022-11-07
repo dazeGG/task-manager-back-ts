@@ -6,8 +6,8 @@ import { IGroup } from '../models/Group'
 // Models
 import Groups from '../models/Group'
 
-class userController {
-  async getGroups(req: Request, res: Response) {
+export default {
+  getGroups: async (req: Request, res: Response) => {
     const groups: { _id: mongoose.Types.ObjectId, title: string }[] = []
     for (const groupID of res.locals.user.groups || []) {
       const group: HydratedDocument<IGroup> | null = await Groups.findById(groupID)
@@ -16,5 +16,3 @@ class userController {
     res.status(200).send(groups)
   }
 }
-
-export default new userController()
