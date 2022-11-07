@@ -1,14 +1,22 @@
 // Express and Router type
 import express, { Router } from 'express'
 
-import getUserMiddleware from '../middlewares/getUser'
+// Middlewares
+import userMiddleware from '../middlewares/user'
+import groupMiddleware from '../middlewares/group'
+
+// Controller
 import groupController from '../controllers/group'
 
 const router: Router = express.Router()
 
-router.use('/', getUserMiddleware)
+router.use('/', userMiddleware.getUser)
 
 router.post('/', groupController.create)
+
+router.use('/:id', groupMiddleware.getGroup)
+router.use('/:id', userMiddleware.groupExists)
+
 router.get('/:id', groupController.get)
 router.put('/:id', groupController.update)
 router.delete('/:id', groupController.delete)

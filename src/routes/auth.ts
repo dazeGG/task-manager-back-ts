@@ -2,7 +2,7 @@
 import express, { Router } from 'express'
 
 import authMiddleware from '../middlewares/auth'
-import getUserMiddleware from '../middlewares/getUser'
+import userMiddleware from '../middlewares/user'
 import authController from '../controllers/auth'
 
 const router: Router = express.Router()
@@ -29,7 +29,7 @@ router.post('/sign-in', authController.signIn)
 // * Token Refresh
 
 // Middleware
-router.use('/token/refresh', getUserMiddleware)
+router.use('/token/refresh', userMiddleware.getUser)
 
 // Route
 router.put('/token/refresh', authController.tokenRefresh)

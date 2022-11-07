@@ -11,46 +11,31 @@ import Groups from '../models/Group'
 import getGroupFull from '../scripts/getGroupFull'
 
 export default {
-    get: async (req: Request, res: Response) => {
-        const groupId: string = req.params.id
-        if (res.locals.user.groups.includes(groupId)) {
-            const group = await getGroupFull(groupId)
-            if (group) res.status(200).send(group)
-            else res.status(404).send('Group with this id was not found')
-        } else {
-            res.status(404).send('Group with this id was not found')
-        }
-    },
+    get: async (req: Request, res: Response) => res.status(200).send(await getGroupFull(res.locals.group)),
     create: async (req: Request, res: Response) => {
         const group: HydratedDocument<IGroup> = await Groups.create({ title: req.body.title })
         const user: HydratedDocument<IUser> = res.locals.user
         user.groups.push(group._id)
         await user.save()
-        res.status(201).send(await getGroupFull(group._id))
+        res.status(201).send(await getGroupFull(group))
     },
     update: async (req: Request, res: Response) => {
-        const group: HydratedDocument<IGroup> | null = await Groups.findById(req.params.id)
-        if (group) {
-            group.title = req.body.title
-            await group.save()
-            res.status(200).send('Successfully updated')
-        } else {
-            res.status(404).send('Group with this id was not found')
-        }
+        const group: HydratedDocument<IGroup> = res.locals.group
+        group.title = req.body.title
+        await group.save()
+        res.status(200).send('Successfully updated')
     },
     delete: async (req: Request, res: Response) => {
-        const group: HydratedDocument<IGroup> | null = await Groups.findByIdAndDelete(req.params.id)
+        const group: HydratedDocument<IGroup> = res.locals.group
         const user: HydratedDocument<IUser> = res.locals.user
-        if (group) {
-            for (let i = 0; i < user.groups.length; i++) {
-                if (group._id.equals(user.groups[i])) {
-                    user.groups.splice(i, 1)
-                    await user.save()
-                    break
-                }
+        for (let i = 0; i < user.groups.length; i++) {
+            if (group._id.equals(user.groups[i])) {
+                user.groups.splice(i, 1)
+                await user.save()
+                break
             }
-            res.sendStatus(204)
         }
-        else res.status(404).send('Invalid group id')
+        group.delete()
+        res.sendStatus(204)
     }
 }
