@@ -13,5 +13,9 @@ export default {
         } catch (e) {
             res.status(404).send('Group with this id was not found')
         }
+    },
+    taskExists: async (req: Request, res: Response, next: NextFunction) => {
+        if (res.locals.group.tasks.includes(res.locals.task._id)) next()
+        else res.status(404).send('Task with this id was not found')
     }
 }
