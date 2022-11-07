@@ -12,9 +12,9 @@ import getGroupFull from '../scripts/getGroupFull'
 
 export default {
     get: async (req: Request, res: Response) => {
-        const groupID: string = req.params.id
-        if (res.locals.user.groups.includes(groupID)) {
-            const group = await getGroupFull(groupID)
+        const groupId: string = req.params.id
+        if (res.locals.user.groups.includes(groupId)) {
+            const group = await getGroupFull(groupId)
             if (group) res.status(200).send(group)
             else res.status(404).send('Group with this id was not found')
         } else {

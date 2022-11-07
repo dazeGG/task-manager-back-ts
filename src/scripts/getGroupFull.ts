@@ -8,11 +8,11 @@ export interface IGroupFull extends IGroup {
     tasks: any[]
 }
 
-export default async (groupID: mongoose.Types.ObjectId | string): Promise<IGroupFull | null> => {
-    const group = await Groups.findById(groupID)
+export default async (groupId: mongoose.Types.ObjectId | string): Promise<IGroupFull | null> => {
+    const group = await Groups.findById(groupId)
     if (group) {
         const tasks = []
-        for (const taskID of group?.tasks || []) tasks.push(await Tasks.findById(taskID))
+        for (const taskId of group?.tasks || []) tasks.push(await Tasks.findById(taskId))
         return { _id: group._id, title: group.title, tasks }
     } else return group
 }
