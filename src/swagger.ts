@@ -25,6 +25,7 @@ export default {
     tags,
     components,
     paths: {
+        ...YAML.load(path.join(__dirname, '..', 'swagger', 'paths', 'task.yaml')),
         ...YAML.load(path.join(__dirname, '..', 'swagger', 'paths', 'user.yaml')),
         ...YAML.load(path.join(__dirname, '..', 'swagger', 'paths', 'group.yaml'))
     }

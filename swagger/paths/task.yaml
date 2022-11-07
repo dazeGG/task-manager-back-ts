@@ -1,15 +1,20 @@
-/group:
+/task:
   post:
     tags:
-      - Group
-    summary: Endpoint to create group
+      - Task
+    summary: Endpoint to create task
     security:
       - bearerAuth: []
     parameters:
+      - in: headers
+        name: GroupID
+        required: true
+        description: The tasks`s group id
+        type: string
       - in: body
         name: data
         required: true
-        description: The group`s title to create
+        description: The task`s title to create
         schema:
           properties:
             title:
@@ -20,47 +25,63 @@
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Group"
+              $ref: "#/components/schemas/Task"
+      289:
+        $ref: "#/components/responses/InvalidGroupIDError"
+      299:
+        $ref: "#/components/responses/InvalidTaskIDError"
       401:
         $ref: "#/components/responses/UnauthorizedError"
-/group/{_id}:
+/task/{_id}:
   get:
     tags:
-      - Group
-    summary: Endpoint to get user`s group
+      - Task
+    summary: Endpoint to get user`s tasks
     security:
       - bearerAuth: []
     parameters:
+      - in: headers
+        name: GroupID
+        required: true
+        description: The tasks`s group id
+        type: string
       - in: path
         name: _id
         required: true
-        description: The group`s id to get
+        description: The tasks`s id to get
     responses:
       200:
         description: OK
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Group"
+              $ref: "#/components/schemas/Task"
       289:
         $ref: "#/components/responses/InvalidGroupIDError"
+      299:
+        $ref: "#/components/responses/InvalidTaskIDError"
       401:
         $ref: "#/components/responses/UnauthorizedError"
   put:
     tags:
-      - Group
-    summary: Endpoint to update group`s title
+      - Task
+    summary: Endpoint to update tasks`s title
     security:
       - bearerAuth: []
     parameters:
+      - in: headers
+        name: GroupID
+        required: true
+        description: The tasks`s group id
+        type: string
       - in: path
         name: _id
         required: true
-        description: The group`s id to update
+        description: The tasks`s id to update
       - in: body
         name: data
         required: true
-        description: The group`s title to update
+        description: The tasks`s title to update
         schema:
           properties:
             title:
@@ -70,23 +91,32 @@
         description: Successfully updated
       289:
         $ref: "#/components/responses/InvalidGroupIDError"
+      299:
+        $ref: "#/components/responses/InvalidTaskIDError"
       401:
         $ref: "#/components/responses/UnauthorizedError"
   delete:
     tags:
-      - Group
-    summary: Endpoint to delete group by id
+      - Task
+    summary: Endpoint to delete tasks by id
     security:
       - bearerAuth: []
     parameters:
+      - in: headers
+        name: GroupID
+        required: true
+        description: The tasks`s group id
+        type: string
       - in: path
         name: _id
         required: true
-        description: The group`s id to delete
+        description: The tasks`s id to delete
     responses:
       204:
         description: No Content
       289:
         $ref: "#/components/responses/InvalidGroupIDError"
+      299:
+        $ref: "#/components/responses/InvalidTaskIDError"
       401:
         $ref: "#/components/responses/UnauthorizedError"
