@@ -15,7 +15,7 @@ export default {
         } else res.status(401).send('Access token is missing')
     },
     groupExists: async (req: Request, res: Response, next: NextFunction) => {
-        if (res.locals.user.groups.includes(res.locals.group._id)) next()
+        if (res.locals.user._id.equals(res.locals.group.userId)) next()
         else res.status(289).send('Group with this id was not found')
     }
 }

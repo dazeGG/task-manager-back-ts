@@ -1,6 +1,8 @@
 import mongoose from 'mongoose'
 
 export interface ITask {
+  _id: mongoose.Types.ObjectId
+  groupId: mongoose.Types.ObjectId
   title: string
   checked: boolean
   subtasks: [
@@ -12,14 +14,10 @@ export interface ITask {
 }
 
 const taskSchema = new mongoose.Schema<ITask>({
-  title: { type: String, required: true }, // * required
+  groupId: { type: mongoose.Schema.Types.ObjectId, ref: 'Group', required: true, immutable: true },
+  title: { type: String, required: true },
   checked: { type: Boolean, default: false },
-  subtasks: [
-    {
-      title: { type: String, required: true }, // * required
-      checked: { type: Boolean, default: false },
-    },
-  ],
+  subtasks: [{ title: { type: String, required: true }, checked: { type: Boolean, default: false } }]
 })
 
-export default mongoose.model('task', taskSchema)
+export default mongoose.model<ITask>('Task', taskSchema)

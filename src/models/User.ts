@@ -8,15 +8,10 @@ export interface IUser {
 }
 
 const userSchema = new mongoose.Schema({
-  username: { type: String, required: true, unique: true }, // * required
-  token: { type: String, required: true, unique: true }, // * required
-  password: { type: String, required: true }, // * required
-  groups: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'group'
-    }
-  ],
+  username: { type: String, required: true, unique: true },
+  token: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  groups: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Group' }]
 })
 
-export default mongoose.model('user', userSchema)
+export default mongoose.model<IUser>('User', userSchema)

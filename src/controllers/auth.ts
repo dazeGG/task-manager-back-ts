@@ -17,7 +17,7 @@ export default {
       const username: string = req.body.username
       const password: string = await bcrypt.hash(req.body.password, 10)
       const token: string = await generateUniqueToken()
-      await Users.create({ username, password, token, groups: [await createWelcomeGroup()] })
+      await createWelcomeGroup(await Users.create({ username, password, token }))
       res.status(201).json({ token })
     } catch (error) {
       console.log(error)

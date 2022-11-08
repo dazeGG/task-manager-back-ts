@@ -15,7 +15,7 @@ export default {
         }
     },
     taskExists: async (req: Request, res: Response, next: NextFunction) => {
-        if (res.locals.group.tasks.includes(res.locals.task._id)) next()
+        if (res.locals.group._id.equals(res.locals.task.groupId)) next()
         else res.status(299).send('Task with this id was not found')
     }
 }
