@@ -13,8 +13,8 @@ import getGroupFull from '../scripts/getGroupFull'
 export default {
     get: async (req: Request, res: Response) => res.status(200).send(await getGroupFull(res.locals.group)),
     create: async (req: Request, res: Response) => {
-        const group: HydratedDocument<IGroup> = await Groups.create({ title: req.body.title })
         const user: HydratedDocument<IUser> = res.locals.user
+        const group: HydratedDocument<IGroup> = await Groups.create({ title: req.body.title, userId: user._id })
         user.groups.push(group._id)
         await user.save()
         res.status(201).send(await getGroupFull(group))
