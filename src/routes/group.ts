@@ -19,6 +19,7 @@ router.use('/:id', userMiddleware.groupExists)
 
 router.get('/:id', groupController.get)
 router.put('/:id', groupController.update)
+router.put('/:id/move', groupController.move)
 router.delete('/:id', groupController.delete)
 
 export default router
